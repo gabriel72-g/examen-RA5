@@ -1,0 +1,38 @@
+name: subir y crear
+on:
+  push:
+    branches:
+      -main
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      
+    - name: Configuración
+      uses: hashicorp/setup-terraform@v2
+
+      with:
+        terraform_version: "latest"
+    
+    - name: Configurar AWS credentials
+      uses: aws-actions/configure-aws-credentials@v4
+      with:
+        aws-acces-key-id: ${{secrets.AWS_ACCESS_KEY_ID}}
+        aws_secret_access_key: ${{secrets.AWS_SECRET_ACCES_KEY}}
+        aws_session_token: ${{secrets.AWS_SESION_TOKEN}}
+        aws_region: "us-east-1"
+
+    - name: terraform init
+      run: terraform init -reconfigure
+
+    - name: terraform Plan
+      run: terraform plan -out=tfplan-main
+
+    - name: terraform Apply
+      run: terraform apply -auto-approve
+
+    - name: guardar tfstate
+      run: aws s3 cp terraform.tfstate s3://mi-bucket-gabriel-2/terraform.tfstate
