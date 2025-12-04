@@ -1,0 +1,9 @@
+nelmio_api_doc:
+    documentation:
+        info:
+            title: 'API de tu proyecto'
+            description: 'Documentación generada automáticamente con NelmioApiDocBundle'
+            version: 1.0.0
+    areas:
+        path_patterns:  # usa esto, no "path"
+            - ^/api(?!/docs)
