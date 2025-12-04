@@ -8,7 +8,7 @@ sudo a2enmod ldap authnz_ldap ssl rewrite headers
 sudo systemctl restar apache2
 
 
-
+git clone --filter=blob:none --no-checkout https://github.com/gabriel72-g/examen-RA5 /pagina
 cd /carpeta/examen-RA5
 git sparse-checkout init --cone
 git sparse-checkout set pagina
